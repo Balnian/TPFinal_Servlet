@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="SpectInfo" ng-controller="SpectInfoController as infos">
+<head>
+  <title>Admission | {{infos.Spectacles.Nom}}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  <script src="Script/SpectacleInfo/app2.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Admission</a>
+      </div>
+      <div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="index.html">Accueil</a></li>
+          <li><a href="Shop.html">Billeterie</a></li>
+          <li><a href="#">Page 2</a></li>
+          <li><a href="#">Page 3</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="panel-title">{{infos.Spectacles.Nom}}</div>
+      </div>
+      <div class="panel-body">
+        <!-- En-tête Spectacle -->
+        <div class="jumbotron">
+          <div class="row">
+          <div class="col-xs-12 col-md-4">
+            <img src="Images/placeholder.jpg" class="img-responsive" alt="...">
+          </div>
+          <div class="col-xs-12 col-md-8">
+            <p>{{infos.Spectacles.Description}}</p>
+          </div>
+        </div>
+        </div>
+        <!-- Horraire Spectacle -->
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Place</th>
+              <th>Date</th>
+              <th>Heure</th>
+              <th>Section</th>
+            </tr>
+          </thead>
+          <tbody  ng-repeat="place in infos.Spectacles.Lieu">
+          <tr ng-repeat="DH in place.DateHeure">
+            <td> <strong>{{place.Nom | uppercase}}</strong></td>
+            <td> {{DH.Date}} </td>
+            <td> {{DH.Heure}}</td>
+            <td>
+              <!-- Affichage Section -->
+                <table class="table table-condensed" >
+                  <tbody>
+                    <tr ng-repeat="sect in place.Sections">
+                      <td>{{sect.Nom}}<td>
+                      <td>{{sect.Prix | currency}}</td>
+                      <td><a class="btn btn-warning pull-right"><span class="glyphicon glyphicon-shopping-cart"></span> Ajouter au panier</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </td>
+          </tr>
+        </tbody>
+        </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>

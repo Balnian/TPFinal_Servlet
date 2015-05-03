@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app="SpectInfo" ng-controller="SpectInfoController as infos">
+<head>
+  <title>Admission | {{infos.Spectacles.Nom}}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+  <script src="Script/SpectacleInfo/app.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Admission</a>
+      </div>
+      <div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="index.html">Accueil</a></li>
+          <li><a href="Shop.html">Billeterie</a></li>
+          <li><a href="#">Page 2</a></li>
+          <li><a href="#">Page 3</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="panel-title">{{infos.Spectacles.Nom}}</div>
+      </div>
+      <div class="panel-body">
+        <!-- En-tête Spectacle -->
+        <div class="jumbotron">
+          <div class="row">
+          <div class="col-xs-12 col-md-4">
+            <img src="Images/placeholder.jpg" class="img-responsive" alt="...">
+          </div>
+          <div class="col-xs-12 col-md-8">
+            <p>{{infos.Spectacles.Description}}</p>
+          </div>
+        </div>
+        </div>
+        <!-- Horraire Spectacle -->
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="panel panel-default" role="tab" ng-repeat="place in infos.Spectacles.Lieu">
+            <div class="panel-heading btn btn-block" role="tab" id="{{'h_'+place.id}}"  class="none" data-toggle="collapse" data-parent="#accordion" href="{{'#c_'+place.id}}" aria-expanded="true" aria-controls="{{'c_'+place.id}}">
+
+              <div class="panel-title">
+
+                  <h3>{{place.Nom | uppercase}}<small>, {{place.Adresse}}</small></h3>
+
+              </div>
+              <h5></h5>
+
+            </div>
+            <div id="{{'c_'+place.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="{{'h_'+place.id}}">
+              <div class="panel-body">
+                <table class="table">
+                  
+                  <tr ng-repeat="DH in place.DateHeure">
+                    <td>{{DH.Date}},{{DH.Heure}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>
