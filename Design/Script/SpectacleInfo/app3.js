@@ -65,9 +65,13 @@
   ;
 
   var app = angular.module('SpectInfo', []);
-  app.controller('SpectInfoController',function(){
-    this.Spectacles=Spectacle;
-  });
+  app.controller('SpectInfoController',['$http',function($http){
+      var Info=this;
+    Info.Spectacles=[];
+    $http.jsonp('Data/SpectacleInfo.json').success(function(data){
+      Info.Spectacles=data;
+    });
+  }]);
   /*app.controller('FiltreController',function(){
     this.
   });*/
