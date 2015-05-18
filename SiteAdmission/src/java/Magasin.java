@@ -43,25 +43,12 @@ public class Magasin extends HttpServlet {
 "  <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>\n" +
 "  <script src=\"http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js\"></script>\n" +
 "  <script src=\"http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js\"></script>\n" +
-"  <script src=\"Script/Shop/app.js\"></script>\n" +
+"  <script src=\"Script/Shop/app.js\"></script>\n" + 
+"  <script src=\"Script/Commun/menu.js\"></script>\n" +
 "</head>\n" +
 "\n" +
-"<body  ng-app=\"SpectStore\">\n" +
-"  <nav class=\"navbar navbar-default\">\n" +
-"    <div class=\"container\">\n" +
-"      <div class=\"navbar-header\">\n" +
-"        <a class=\"navbar-brand\" href=\"#\">Admission</a>\n" +
-"      </div>\n" +
-"      <div>\n" +
-"        <ul class=\"nav navbar-nav\">\n" +
-"          <li ><a href=\"index.html\">Accueil</a></li>\n" +
-"          <li class=\"active\"><a href=\"Shop.html\">Billeterie</a></li>\n" +
-"          <li><a href=\"#\">Page 2</a></li>\n" +
-"          <li><a href=\"#\">Page 3</a></li>\n" +
-"        </ul>\n" +
-"      </div>\n" +
-"    </div>\n" +
-"  </nav>\n" +
+"<body   ng-app=\"SpectStore\">\n" +
+" <div ng-app=\"Menu\"> <Main-Menu ></Main-Menu></div>\n" +
 "  <div class=\"container\" ng-controller=\"StoreController as store\">\n" +
 "      <div class=\"row\" >\n" +
 "        <div class=\"col-xs-12 col-sm-6 col-md-3\" ng-repeat=\"Spectacle in store.Spectacles\">\n" +
