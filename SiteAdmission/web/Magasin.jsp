@@ -1,4 +1,10 @@
+<%-- 
+    Document   : Magasin
+    Created on : 2015-05-20, 04:48:27
+    Author     : Francis
+--%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,34 +20,7 @@
 
 <body   ng-app="SpectStore">
     <!-- Menu -->
- <nav class="navbar navbar-default">
-<div class="container">
-  <div class="navbar-header">
-    <a class="navbar-brand" href="#">Admission</a>
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-  </div>
-  <div class="collapse navbar-collapse" id="myNavbar">
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="/Admission">Billeterie</a></li>
-      <li><a href="Magasin"> <span class="glyphicon glyphicon-shopping-cart"></span> Panier</a></li>
-
-    </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Recherche" ng-model="MainSearch.$">
-        </div>
-      </form>
-    <ul class="nav navbar-nav navbar-right">
-     <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-     <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-   </ul>
-  </div>
-</div>
-</nav>
+<%@include file="HtmlTemplate/Menu/Menu.jsp" %>
 <!-- Contenu -->
 <div class="container" ng-controller="StoreController as store" >
       <div class="row" >
