@@ -31,7 +31,7 @@
             <label for="Recherche">Recherche:</label>
             <div class="input-group ">
               
-              <input type="text" class="form-control" placeholder="Place, Date ou Heure" ng-model="MainSearch.$"/>
+              <input type="text" class="form-control" placeholder="Nom, Catégorie ..." ng-model="MainSearch.$"/>
               <span class="input-group-btn">
                   <a class="btn btn-default" data-toggle="collapse" href="#mainfiltre" aria-expanded="false" aria-controls="collapseExample">
                       Filtre <span class="glyphicon glyphicon-filter"></span>
@@ -51,9 +51,10 @@
               <label for="Recherche Place">Place:</label>
               <input type="text" class="form-control" placeholder="Place" ng-model="MainSearch.Nom"/>
             </div>
-            <div class="form-group">
-              <label for="Recherche Date">Date:</label>
-              <input type="text" class="form-control" placeholder="Date" ng-model="search.Date"/>
+            <h5><b>Catégories:</b></h5>
+            <div class="checkbox" ng-repeat="cat in Catlist">
+              <label for="{{cat.Nom}}">
+              <input type="checkbox" ng-click="includeCat(cat.Nom)" placeholder="Date" ng-model="search.Cat"/>{{cat.Nom}}</label>
             </div>
             <div class="form-group">
               <label for="Recherche Heure">Heure:</label>
@@ -88,16 +89,17 @@
 
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="Spectacle in Spectacles | filter:MainSearch">
+        <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="Spectacle in Spectacles | filter:MainSearch | filter:catFilter">
 
           <div class="thumbnail">
-              <img ng-src="{{Spectacle.Img}}">
-            <img src="Images/placeholder.jpg"  alt="...">
+              <img ng-src="Images/{{Spectacle.Img}}" ng-hide="Spectacle.Img == 'null'">
+             
+            <img src="Images/placeholder.jpg"  ng-show="Spectacle.Img == 'null'" alt="...">
             <div class="caption">
               <h3>{{Spectacle.Nom}}</h3>
               <h4>Catégorie: <small>{{Spectacle.Cat}}</small></h4>
-              <button type="button" ng-click="choix(Spectacle.ID)" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
-              <p><a href="#" class="btn btn-primary" role="button">Voir les représentation...</a> </p>
+              <button type="button" ng-click="choix(Spectacle.ID)" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Voir les représentation...</button>
+             
             </div>
           </div>
         </div>
