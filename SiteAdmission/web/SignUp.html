@@ -59,14 +59,12 @@
                                         <label class="control-label" for="courriel">Confirmation Courriel</label>
                                         <input type="Email" name="cemail" ng-model="cemail.text" id="courriel" class="form-control input-lg" placeholder="Courriel" aria-describedby="courriel2Status" required/>
                                         <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="myForm.input.$error.email" aria-hidden="true"></span>
-                                        <span id="courriel2Status" class="sr-only">Courriel Invalide!</span>
+                                        <span id="ccourriel2Status" class="sr-only">Courriel Invalide!</span>
                                     </div>
-                                    {{email.text}}
-                                    {{cemail.text}}
-                                        {{email.text === cemail.text}}
+
 
                                     <div class="form-group" ng-class="{'has-error has-feedback': myForm.Pass.$error.password || !(pass.text == cpass.text) }">
-                                        <label class="control-label sr-only" for="pass">Mot de passe</label>
+                                        <label class="control-label" for="pass">Mot de passe</label>
                                         <input type="password" name="Pass" id="pass" ng-model="pass.text"  class="form-control input-lg" placeholder="Mot de passe"  required/>
                                         <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="myForm.Pass.$error.password" aria-hidden="true"></span>
                                         <span id="pass2Status" class="sr-only">Courriel Invalide!</span>
@@ -74,18 +72,32 @@
 
                                     </div>
                                         <div class="form-group" ng-class="{'has-error has-feedback': myForm.cPass.$error.password || !(pass.text == cpass.text) }">
-                                        <label class="control-label sr-only" for="pass">Mot de passe</label>
+                                        <label class="control-label" for="pass">Confirmation Mot de passe</label>
                                         <input type="password" name="cPass" id="pass" ng-model="cpass.text"  class="form-control input-lg" placeholder="Mot de passe"  required/>
                                         <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="myForm.Pass.$error.password" aria-hidden="true"></span>
-                                        <span id="pass2Status" class="sr-only">Courriel Invalide!</span>
+                                        <span id="cpass2Status" class="sr-only">Courriel Invalide!</span>
 
 
                                     </div>
+                                        
+                                         <div class="form-group">
+                                        <label class="control-label" for="pass">Nom</label>
+                                        <input type="text" name="Nom" id="nom" ng-model="Nom.text"  class="form-control input-lg" placeholder="Mot de passe"  required/>
+                                         </div>
+                                        <div class="form-group">
+                                        <label class="control-label" for="pass">Prénom</label>
+                                        <input type="text" name="Prenom" id="prenom" ng-model="Prenom.text"  class="form-control input-lg" placeholder="Mot de passe"  required/>
+                                         </div>
+                                        <div class="form-group">
+                                        <label class="control-label" for="pass">Adresse</label>
+                                        <input type="text" name="Adresse" id="adresse" ng-model="Adresse.text"  class="form-control input-lg" placeholder="Mot de passe"  required/>
+                                         </div>
+                                        <div class="form-group">
+                                        <label class="control-label" for="pass">Téléphone</label>
+                                        <input type="text" name="Tel" id="tel" ng-model="Tel.text"  class="form-control input-lg" placeholder="Mot de passe"  required/>
+                                         </div>
 
                                     <button  type="submit" class="btn btn-primary center-block input-lg" ng-disabled="!myForm.$valid || !(pass.text == cpass.text) || !(email.text == cemail.text) " >Connection</button>
-                                    {{!myForm.$valid}}
-                                    {{!(pass.text == cpass.text)}}
-                                    {{!(email.text == cemail.text)}}
                                 </form>
 
                             </div>

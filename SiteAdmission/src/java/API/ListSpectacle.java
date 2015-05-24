@@ -7,10 +7,19 @@ package API;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import oracle.jdbc.OracleDriver;
+import java.sql.*;
 
 /**
  *
@@ -30,70 +39,52 @@ public class ListSpectacle extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
+        
+        Connection conn=null; 
+        Statement stm;
+        ResultSet rset;
+        String Url ="jdbc:oracle:thin:@205.237.244.251:1521:orcl";
+        String UName = "thibodea";
+        String Pword = "ORACLE1";
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("{\n" +
-"  \"Nom\": \"Spectacle1\",\n" +
-"  \"Description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sed rutrum lorem, sagittis facilisis nulla. Donec finibus ultrices justo a.\",\n" +
-"  \"Rep\": [\n" +
-"    {\n" +
-"      \"Nom\": \"place1\",\n" +
-"      \"Adresse\": \"1234 Adresse1, ville1\",\n" +
-"      \"Date\": \"2015-05-11\",\n" +
-"      \"Heure\": \"18:12\"\n" +
-"    },\n" +
-"    {\n" +
-"      \"Nom\": \"place1\",\n" +
-"      \"Adresse\": \"1234 Adresse1, ville1\",\n" +
-"      \"Date\": \"2015-05-12\",\n" +
-"      \"Heure\": \"19:00\"\n" +
-"    },\n" +
-"    {\n" +
-"      \"Nom\": \"place1\",\n" +
-"      \"Adresse\": \"1234 Adresse1, ville1\",\n" +
-"      \"Date\": \"2015-05-13\",\n" +
-"      \"Heure\": \"18:00\"\n" +
-"    },\n" +
-"    {\n" +
-"      \"Nom\": \"place2\",\n" +
-"      \"Adresse\": \"1234 Adresse2, ville2\",\n" +
-"      \"Date\": \"2015-05-11\",\n" +
-"      \"Heure\": \"19:00\"\n" +
-"    },\n" +
-"    {\n" +
-"      \"Nom\": \"place2\",\n" +
-"      \"Adresse\": \"1234 Adresse2, ville2\",\n" +
-"      \"Date\": \"2015-05-12\",\n" +
-"      \"Heure\": \"19:00\"\n" +
-"    },\n" +
-"    {\n" +
-"      \"Nom\": \"place2\",\n" +
-"      \"Adresse\": \"1234 Adresse2, ville2\",\n" +
-"      \"Date\": \"2015-05-13\",\n" +
-"      \"Heure\": \"19:00\"\n" +
-"    },\n" +
-"    {\n" +
-"      \"Nom\": \"place3\",\n" +
-"      \"Adresse\": \"1234 Adresse3, ville3\",\n" +
-"      \"Date\": \"2015-05-11\",\n" +
-"      \"Heure\": \"19:00\"\n" +
-"    },\n" +
-"    {\n" +
-"      \"Nom\": \"place3\",\n" +
-"      \"Adresse\": \"1234 Adresse3, ville3\",\n" +
-"      \"Date\": \"2015-05-12\",\n" +
-"      \"Heure\": \"19:00\"\n" +
-"    },\n" +
-"    {\n" +
-"      \"Nom\": \"place3\",\n" +
-"      \"Adresse\": \"1234 Adresse3, ville3\",\n" +
-"      \"Date\": \"2015-05-13\",\n" +
-"      \"Heure\": \"19:00\"\n" +
-"    }\n" +
-"\n" +
-"  ]\n" +
-"\n" +
-"}");
+            try {
+                /* TODO output your page here. You may use following sample code. */
+                
+                DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+                
+                conn = DriverManager.getConnection(Url,UName,Pword);
+                if(conn != null)
+                {
+                stm=conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+                rset = stm.executeQuery("select s.NUMSPEC,s.NOMSPEC,s.IMAGEURL,cat.NOMCAT from Spectacles s inner join CATEGORIES cat on cat.NUMCAT = s.NUMCAT");
+                out.print("[\n");
+    
+                while(rset.next())
+                {
+
+                    out.print("{\n");
+                    out.print("\"ID\": " + rset.getInt("NUMSPEC")+",\n");
+                    out.print("\"Nom\": \""+rset.getString("NOMSPEC")+"\",\n");
+                    out.print("\"Img\": \""+rset.getString("IMAGEURL")+"\",\n");
+                    out.print("\"Cat\": \""+rset.getString("NOMCAT")+"\"\n");
+                    
+                   if(rset.isLast())
+                    {
+                        out.print("}\n");
+                    }
+                    else
+                    {
+                        out.print("},\n");
+                   }
+                }
+                out.print("]");
+                }
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ListSpectacle.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+       
         }
     }
 

@@ -88,14 +88,15 @@
 
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="Spectacle in store.Spectacles | filter:MainSearch">
+        <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="Spectacle in Spectacles | filter:MainSearch">
 
           <div class="thumbnail">
+              <img ng-src="{{Spectacle.Img}}">
             <img src="Images/placeholder.jpg"  alt="...">
             <div class="caption">
               <h3>{{Spectacle.Nom}}</h3>
-              <p>{{Spectacle.Description}}</p>
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
+              <h4>Catégorie: <small>{{Spectacle.Cat}}</small></h4>
+              <button type="button" ng-click="choix(Spectacle.ID)" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
               <p><a href="#" class="btn btn-primary" role="button">Voir les représentation...</a> </p>
             </div>
           </div>
@@ -104,7 +105,7 @@
           <!-- Large modal -->
         <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-              <div class="modal-content" ng-controller="SpectInfoController as infos">
+              <div class="modal-content" ng-controller="SpectInfoController">
                 <!-- En-tête Spectacle -->
         <div class="jumbotron">
           <div class="row">
@@ -112,7 +113,8 @@
             <img src="Images/placeholder.jpg" class="img-responsive" alt="...">
           </div>
           <div class="col-xs-12 col-md-8">
-            <p>{{infos.Spectacles.Description}}</p>
+              <h2>{{Spectacles.Nom}}
+            <p>{{Spectacles.Cat}}</p>
           </div>
         </div>
         </div>
@@ -187,15 +189,17 @@
             <tr>
               <th >Place </th>
               <th >Date</th>
-              <th >Heure</th>
+              <th> Heure </th>
+              <th >Adresse</th>
               <th></th>
             </tr>
           </thead>
           <tbody  >
-          <tr ng-repeat="place in infos.Spectacles.Rep | filter:search">
+          <tr ng-repeat="place in Spectacles.Rep | filter:search">
             <td> <strong>{{place.Nom | uppercase}}</strong></td>
-            <td> {{place.Date}}</td>
-            <td> {{place.Heure}}</td>
+            <td> {{place.Date }}</td>
+            <td> {{place.Time|date:'shortTime'}}</td>
+            <td> {{place.Addr}}</td>
             <td>
             <a class="btn btn-warning btn-center"><span class="glyphicon glyphicon-shopping-cart"></span> Ajouter au panier</a>
             </td>

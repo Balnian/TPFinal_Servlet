@@ -48,7 +48,7 @@
                             </div>
 
                             <button  type="submit" class="btn btn-primary center-block input-lg" ng-disabled="!myForm.$valid" >Connection</button>
-                            {{email.text}}
+                            
                         </form>
                                 
                             </div>
