@@ -39,6 +39,9 @@
         return spec;
     };
     
+    //Orderby
+    //Nom
+   
   }]);
   
   app.controller('SpectInfoController',['$scope','$rootScope','$http',function($scope,$rootScope,$http){
