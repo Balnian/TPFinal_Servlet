@@ -73,7 +73,7 @@
                                 <button type="button" ng-click="OR_Cat = 'Cat'" class="btn btn-default"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span></button>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="Filtre Date">Date: </label>
                             <div class="btn-group" role="group" aria-label="...">
@@ -117,7 +117,10 @@
                         <div class="jumbotron">
                             <div class="row">
                                 <div class="col-xs-12 col-md-4">
-                                    <img src="Images/placeholder.jpg" class="img-responsive" alt="...">
+                                    <img ng-src="Images/{{Spectacles.Img}}" class="img-responsive" ng-hide="Spectacles.Img == 'null'">
+
+                                    <img src="Images/placeholder.jpg"  class="img-responsive" ng-show="Spectacles.Img == 'null'" alt="...">
+                                    <!--<img src="Images/placeholder.jpg" class="img-responsive" alt="...">-->
                                 </div>
                                 <div class="col-xs-12 col-md-8">
                                     <h2>{{Spectacles.Nom}}
@@ -208,7 +211,21 @@
                                     <td> {{place.Time|date:'shortTime'}}</td>
                                     <td> {{place.Addr}}</td>
                                     <td>
-                                        <a class="btn btn-warning btn-center"><span class="glyphicon glyphicon-shopping-cart"></span> Ajouter au panier</a>
+                                        <form action="API/AddBillet">
+                                            <input type="hidden" name="Nrep" ng-value="place.ID">
+                                            
+                                            
+                                            <div class='form-group'>
+                                            <label>Billets:</label>
+                                            <select class='form-control' name='Nsec' required>
+                                                <option ng-repeat="pr in place.prix" ng-value="pr.NSec">{{(pr.Prix| currency)+" " + pr.Nom}}</option> 
+                                            </select>
+                                            </div>
+                                            <div class='form-group'>
+                                                <label>Quantité:</label><input class='form-control' name='Qte' type="number" min='1' value="1" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-warning btn-center"><span class="glyphicon glyphicon-shopping-cart"></span> Ajouter au panier</button>
+                                        </form>
                                     </td>
                                 </tr>
                             </tbody>

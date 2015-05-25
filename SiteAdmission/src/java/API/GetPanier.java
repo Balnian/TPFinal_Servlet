@@ -12,7 +12,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -20,13 +19,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Francis
  */
-@WebServlet(name = "InfoSpectacle", urlPatterns = {"/API/InfoSpectacle"})
-public class InfoSpectacle extends HttpServlet {
+@WebServlet(name = "GetPanier", urlPatterns = {"/API/GetPanier"})
+public class GetPanier extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,64 +39,17 @@ public class InfoSpectacle extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
-
-        String ID = request.getParameter("ID");
-
-        Connection conn = null;
-        PreparedStatement stm;
-        ResultSet rset;
-        String Url = "jdbc:oracle:thin:@205.237.244.251:1521:orcl";
-        String UName = "thibodea";
-        String Pword = "ORACLE1";
-        String sql = "select s.NOMSPEC,s.IMAGEURL,cat.NOMCAT from Spectacles s inner join CATEGORIES cat on cat.NUMCAT = s.NUMCAT where s.numspec=?";
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            try {
-                /* TODO output your page here. You may use following sample code. */
-
-                DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-
-                conn = DriverManager.getConnection(Url, UName, Pword);
-                if (conn != null) {
-                    stm = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                    stm.setString(1, ID);
-                    rset = stm.executeQuery();
-
-                    rset.next();
-
-                    out.print("{\n");
-                    out.print("\"Nom\": \"" + rset.getString("NOMSPEC") + "\",\n");
-                    out.print("\"Img\": \"" + rset.getString("IMAGEURL") + "\",\n");
-                    out.print("\"Cat\": \"" + rset.getString("NOMCAT") + "\",\n");
-                    out.print("\"Rep\": [\n");
-                    try {
-                        stm.clearParameters();
-                        sql = "select r.NUMREP, r.NUMSALLE, r.LADATE, r.DISPONIBLE, sa.NOMSALLE, sa.ADRESSE  from representations r inner JOIN salles sa on r.NUMSALLE = sa.NUMSALLE where numspec = ?";
-
-                        stm = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                        stm.setString(1, ID);
-                        rset = stm.executeQuery();
-
-                        while (rset.next()) {
-
-                            out.print("{\n");
-                            out.print("\"ID\": " + rset.getInt("NUMREP") + ",\n");
-                            out.print("\"Date\": \"" + rset.getDate("LADATE") + "\",\n");
-                            out.print("\"Time\": \"" + rset.getTimestamp("LADATE").getTime() + "\",\n");
-                            out.print("\"Dispo\": \"" + rset.getString("DISPONIBLE") + "\",\n");
-                            out.print("\"Nom\": \"" + rset.getString("NOMSALLE") + "\",\n");
-                            out.print("\"Addr\": \"" + rset.getString("ADRESSE").replace('"', '\'') + "\",\n");
-                            //out.print("\"Cat\": \"" + rset.getString("NOMCAT") + "\"\n");
-                            
-                            //Boucle pour avoir les prix par salle/section pour un spectacle
-                            
-                            Connection conn2 = null;
+            /* TODO output your page here. You may use following sample code. */
+            Connection conn2 = null;
                             PreparedStatement stm2;
                             ResultSet rset2;
                             String Url2 = "jdbc:oracle:thin:@205.237.244.251:1521:orcl";
                             String UName2 = "thibodea";
                             String Pword2 = "ORACLE1";
                             String sql2 = "select prix.NUMPRIX,prix.NUMSEC,SECTIONS.NUMSALLE,prix.NUMSPEC,prix.PRIX,SECTIONS.NOMSEC from prix inner join SECTIONS on SECTIONS.NUMSEC = prix.NUMSEC where numspec = ? and  numsalle = ?";
+                            HttpSession session = request.getSession(false);
                             try {
                                 /* TODO output your page here. You may use following sample code. */
 
@@ -105,8 +58,8 @@ public class InfoSpectacle extends HttpServlet {
                                 conn2 = DriverManager.getConnection(Url2, UName2, Pword2);
                                 if (conn2 != null) {
                                     stm2 = conn2.prepareStatement(sql2,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                                    stm2.setString(1, ID);
-                                    stm2.setInt(2, rset.getInt("NUMSALLE"));
+                                    stm2.setInt(1,Integer.parseInt( session.getAttribute("ID").toString()));
+                                    stm2.setInt(2,12);
                                     rset2 = stm2.executeQuery();
                                     out.print("\"prix\": [\n");
 
@@ -133,31 +86,6 @@ public class InfoSpectacle extends HttpServlet {
                             } catch (SQLException ex) {
                                 Logger.getLogger(ListSpectacle.class.getName()).log(Level.SEVERE, null, ex);
                             }
-
-                            if (rset.isLast()) {
-                                out.print("}\n");
-                            } else {
-                                out.print("},\n");
-                            }
-                        }
-                        out.print("]\n");
-                        if (conn != null) {
-                            conn.close();
-                        }
-                    } catch (SQLException ex) {
-                        Logger.getLogger(ListSpectacle.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    out.print("}\n");
-
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ListSpectacle.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
         }
     }
 

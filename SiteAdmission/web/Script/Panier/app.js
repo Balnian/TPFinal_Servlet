@@ -7,10 +7,10 @@
 
   var app = angular.module('Panier', []);
   app.controller('PanierController',['$http','$scope',function($http,$scope){
-       /*$scope.email = {
-        text: 'me@example.com'
-      };*/
-    
+       $scope.panier=[];
+    $http.get('API/GetPanier').success(function(data){
+      $scope.panier=data;
+    });
   }]);
   /*app.controller('FiltreController',function(){
     this.

@@ -53,7 +53,12 @@
                 $scope.Spectacles=data;
             });
     });
-   
-    /**/
+    
+   //Form Ajax Send
+   $scope.form={};
+    $scope.processForm = function(){
+            
+    };
+          
   }]);
 })();

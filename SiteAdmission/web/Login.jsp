@@ -28,13 +28,13 @@
                         <div class="row">
                             <div class="col-xs-6 col-xs-offset-3">
                                 <h1>Connection</h1>
-                        <form name="myForm" ng-controller="LoginController" novalidate>
+                                <form name="myForm" ng-controller="LoginController" action="API/Login" method="POST" novalidate>
                             
                             <div class="form-group" ng-class="{'has-error has-feedback': myForm.input.$error.email }" >
-                                <label class="control-label sr-only" for="courriel">Courriel</label>
-                                <input type="Email" name="input" ng-model="email.text" id="courriel" class="form-control input-lg" placeholder="Courriel" aria-describedby="courriel2Status" required/>
+                                <label class="control-label sr-only" for="courriel">Alias</label>
+                                <input type="Text" name="Alias" ng-model="email.text" id="courriel" class="form-control input-lg" placeholder="Alias" aria-describedby="courriel2Status" required/>
                                 <span class="glyphicon glyphicon-remove form-control-feedback" ng-show="myForm.input.$error.email" aria-hidden="true"></span>
-                                <span id="courriel2Status" class="sr-only">Courriel Invalide!</span>
+                                <span id="courriel2Status" class="sr-only">Alias Invalide!</span>
                             </div>
 
 

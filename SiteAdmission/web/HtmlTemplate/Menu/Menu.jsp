@@ -25,8 +25,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <%
                     
-                    if(null != session.getAttribute("Connecter"))
-                        out.write("<li><a href=\"#\"><span class=\"glyphicon glyphicon-log-out\"></span> Déconnection</a></li>");
+                    if(null != session.getAttribute("ID"))
+                        out.write("<li><a href=\"API/Deco\"><span class=\"glyphicon glyphicon-log-out\"></span> Déconnection</a></li>");
                     else
                         out.write(
                                 "<li><a href=\"SignUp.html\"><span class=\"glyphicon glyphicon-user\"></span> Créer un compte</a></li>"+
